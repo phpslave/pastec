@@ -1,3 +1,17 @@
 *~
 *.pyc
 build/
+.vagrant/
+puppet/code/modules/*
+puppet/code/modules/.LIB_PLACEHOLDER
+puppet/code/.librarian
+puppet/code/.tmp
+libs/*
+*/.DS_Store
+.DS_Store
+puppet/.DS_Store
+puppet/code/.DS_Store
+puppet/code/environments/.DS_Store
+puppet/code/environments/vagrant/.DS_Store
+puppet/code/environments/vagrant/modules/.DS_Store
+puppet/code/environments/vagrant/modules/bb_liferay/.DS_Store

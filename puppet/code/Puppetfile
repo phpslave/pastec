@@ -1,0 +1,12 @@
+# Configuration for librarian-puppet
+forge "http://forge.puppetlabs.com"
+mod "puppetlabs/razor"
+mod "puppetlabs/ntp", "0.0.3"
+mod "maestrodev/wget"
+mod "puppetlabs/git"
+mod "puppetlabs/stdlib"
+mod "stahnma/epel"
+mod "spec", :git => "https://github.com/Mylezeem/puppet-jpackage"
+mod "puppetlabs/concat"
+mod "nanliu/staging"
+mod "puppetlabs/vcsrepo"

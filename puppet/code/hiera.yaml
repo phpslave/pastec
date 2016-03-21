@@ -1,0 +1,13 @@
+---
+:backends:
+  - yaml
+  - json
+:yaml:
+  :datadir: "/vagrant/puppet/code/environments/%{::environment}/hieradata"
+:json:
+  :datadir: "/vagrant/puppet/code/environments/%{::environment}/hieradata"
+:hierarchy:
+  - "%{environment}"
+  - "%{calling_module}"
+  - common
+:logger: console
