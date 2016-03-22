@@ -1,4 +1,4 @@
-class plastec_common::build {
+class pastec_common::build {
 	file { '/home/vagrant/share/pastec/build':
     	ensure => 'directory',
   	}

@@ -14,8 +14,8 @@ node 'pastec' {
 		source   => 'git://github.com/phpslave/pastec.git',
 	}
 	
-	include plastec_common::build
-	
+	include pastec_common::build
+	include pastec_common::download_test
 	# order
-	Class['pastec_common'] -> Class['plastec_common::build']	
+	Class['pastec_common'] -> Class['pastec_common::build']	-> Class['pastec_common::download_test']
 }

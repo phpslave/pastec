@@ -1,4 +1,4 @@
 #!/bin/bash
 cd /home/vagrant/share/pastec/build
-cmake ../
-make
+/usr/bin/cmake ../
+/usr/bin/make
