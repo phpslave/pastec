@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.name = 'pastec'
     end
     config.vm.network :private_network, ip: "192.168.70.2"
-  #  config.vm.network  :forwarded_port, guest: 8080, host: 8080, id: "webserver1", auto_correct: true
+    config.vm.network  :forwarded_port, guest: 4212, host: 4212, id: "Pastec", auto_correct: true
   #  config.vm.network  :forwarded_port, guest: 8088, host: 8088, id: "webserver2", auto_correct: true
   #  config.vm.network  :forwarded_port, guest: 9000, host: 9000, id: "xdebug", auto_correct: true
     # not sure on the sync yet
