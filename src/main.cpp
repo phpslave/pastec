@@ -42,7 +42,7 @@ void intHandler(int signum) {
 void printUsage()
 {
     cout << "Usage :" << endl
-         << "./PastecIndex [-p portNumber] [-i indexPath] [--forward-index] [--https] [--auth-key AuthKey] visualWordList" << endl;
+         << "./pastec [-p portNumber] [-i indexPath] [--forward-index] [--https] [--auth-key AuthKey] visualWordList" << endl;
 }
 
 
