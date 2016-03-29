@@ -119,6 +119,19 @@ int main(int argc, char** argv)
     FeatureExtractor *ife = new ORBFeatureExtractor((ORBIndex *)index, wordIndex);
     Searcher *is = new ORBSearcher((ORBIndex *)index, wordIndex);
     RequestHandler *rh = new RequestHandler(ife, is, index, authKey);
+    /**
+     * scan the dir given
+     */
+    len = strlen(loadDir);
+    dirp = opendir(".");
+    while ((dp = readdir(dirp)) != NULL)
+            if (dp->d_namlen == len && !strcmp(dp->d_name, loadDir)) {
+                    (void)closedir(dirp);
+                    return FOUND;
+            }
+    (void)closedir(dirp);
+    return NOT_FOUND;
+
     s = new HTTPServer(rh, i_port, https);
 
     signal(SIGHUP, intHandler);
