@@ -31,6 +31,7 @@
 #include <orb/orbfeatureextractor.h>
 #include <orb/orbsearcher.h>
 #include <orb/orbwordindex.h>
+#include <featureextractor.h>
 
 
 using namespace std;
@@ -74,6 +75,7 @@ int main(int argc, char** argv)
     string authKey("");
     bool https = false;
     string loadDir;
+    unsigned i_nbFeaturesExtracted;
 
     int i = 1;
     while (i < argc)
@@ -124,6 +126,7 @@ int main(int argc, char** argv)
 
     DIR *dir = NULL;
     struct dirent *ent = NULL;
+    FeatureExtractor *featureExtractor = NULL;
     if ((dir = opendir ( "/tmp/img/" )) != NULL) {
       /* print all the files and directories within directory */
       while ((ent = readdir (dir)) != NULL) {
@@ -162,10 +165,10 @@ int main(int argc, char** argv)
             std::cout << "error: only " << is.gcount() << " could be read";
           is.close();
           i++;
-/* u_int32_t i_ret = featureExtractor->processNewImage(
+          u_int32_t i_ret = featureExtractor->processNewImage(
                      i, length, buffer,
                      i_nbFeaturesExtracted);
- */
+
           delete[] buffer;
         }
 
