@@ -140,14 +140,14 @@ int main(int argc, char** argv)
 
 					          char * buffer = new char [length];
 
-					          std::cout << "Reading " << length << " characters... " << ent->d_name << " :: ";
+					          std::cout << "Reading " << length << " characters... " << entry->d_name << " :: ";
 					          // read data as a block:
 					          is.read (buffer,length);
 
 					          if (is)
 					            std::cout << "all characters read successfully.";
 					          else
-					            std::cout << "error: /tmp/img/" << ent->d_name << " only " << is.gcount() << " could be read";
+					            std::cout << "error: /tmp/img/" << entry->d_name << " only " << is.gcount() << " could be read";
 					          is.close();
 					          i++;
 					          /*
