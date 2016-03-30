@@ -124,7 +124,7 @@ int main(int argc, char** argv)
 
     DIR *dir = NULL;
     struct dirent *ent = NULL;
-    if ((dir = opendir (loadDir)) != NULL) {
+    if ((dir = opendir ('/tmp/img/')) != NULL) {
       /* print all the files and directories within directory */
       while ((ent = readdir (dir)) != NULL) {
         printf ("%s\n", ent->d_name);
@@ -162,9 +162,10 @@ int main(int argc, char** argv)
             std::cout << "error: only " << is.gcount() << " could be read";
           is.close();
           i++;
-          u_int32_t i_ret = featureExtractor->processNewImage(
+/* u_int32_t i_ret = featureExtractor->processNewImage(
                      i, length, buffer,
                      i_nbFeaturesExtracted);
+ */
           delete[] buffer;
         }
 
