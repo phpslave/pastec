@@ -20,6 +20,7 @@
  *****************************************************************************/
 
 #include <iostream>
+#include <fstream>
 #include <signal.h>
 
 #include <httpserver.h>
@@ -117,6 +118,61 @@ int main(int argc, char** argv)
     Index *index = new ORBIndex(indexPath, buildForwardIndex);
     ORBWordIndex *wordIndex = new ORBWordIndex(visualWordPath);
     FeatureExtractor *ife = new ORBFeatureExtractor((ORBIndex *)index, wordIndex);
+
+    DIR *dir;
+    struct dirent *ent;
+    if ((dir = opendir ("/tmp/img/")) != NULL) {
+      /* print all the files and directories within directory */
+      while ((ent = readdir (dir)) != NULL) {
+        printf ("%s\n", ent->d_name);
+        /*
+         * open a file read all the contents in
+         *
+         * stat get the file size
+         * allocate byte buffer
+         * read it into the buffer
+         * clear the buffer
+         *
+         * conInfo.uploadedData.data --- read, close
+         *
+         *   u_int32_t i_ret = featureExtractor->processNewImage(
+            i_imageId, conInfo.uploadedData.size(), conInfo.uploadedData.data(),
+            i_nbFeaturesExtracted);
+         *
+         */
+        std::ifstream is (ent->d_name, std::ifstream::binary);
+        if (is) {
+          // get length of file:
+          is.seekg (0, is.end);
+          int length = is.tellg();
+          is.seekg (0, is.beg);
+
+          char * buffer = new char [length];
+
+          std::cout << "Reading " << length << " characters... ";
+          // read data as a block:
+          is.read (buffer,length);
+
+          if (is)
+            std::cout << "all characters read successfully.";
+          else
+            std::cout << "error: only " << is.gcount() << " could be read";
+          is.close();
+
+          // ...buffer contains the entire file...
+
+          delete[] buffer;
+        }
+
+      }
+      closedir (dir);
+    } else {
+      /* could not open directory */
+      perror ("");
+      return EXIT_FAILURE;
+    }
+
+
     Searcher *is = new ORBSearcher((ORBIndex *)index, wordIndex);
     RequestHandler *rh = new RequestHandler(ife, is, index, authKey);
 
