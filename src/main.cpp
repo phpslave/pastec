@@ -162,7 +162,7 @@ int main(int argc, char** argv)
           if (is)
             std::cout << "all characters read successfully.";
           else
-            std::cout << "error: only " << is.gcount() << " could be read";
+            std::cout << "error: " << ent->d_name << " only " << is.gcount() << " could be read";
           is.close();
           i++;
           /*
