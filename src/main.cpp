@@ -122,8 +122,8 @@ int main(int argc, char** argv)
     ORBWordIndex *wordIndex = new ORBWordIndex(visualWordPath);
     FeatureExtractor *ife = new ORBFeatureExtractor((ORBIndex *)index, wordIndex);
 
-    DIR *dir;
-    struct dirent *ent;
+    DIR *dir = NULL;
+    struct dirent *ent = NULL;
     if ((dir = opendir ("/tmp/img/")) != NULL) {
       /* print all the files and directories within directory */
       while ((ent = readdir (dir)) != NULL) {
