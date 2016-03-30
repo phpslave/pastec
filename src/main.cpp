@@ -148,7 +148,7 @@ int main(int argc, char** argv)
          */
         if (ent->d_name == ".") continue;
         if (ent->d_name == "..") continue;
-        std::ifstream is (ent->d_name, std::ifstream::binary);
+        std::ifstream is ("/tmp/img/" + ent->d_name, std::ifstream::binary);
         if (is) {
           // get length of file:
           is.seekg (0, is.end);
@@ -157,14 +157,14 @@ int main(int argc, char** argv)
 
           char * buffer = new char [length];
 
-          std::cout << "Reading " << length << " characters... ";
+          std::cout << "Reading " << length << " characters... " << ent->d_name << " :: ";
           // read data as a block:
           is.read (buffer,length);
 
           if (is)
             std::cout << "all characters read successfully.";
           else
-            std::cout << "error: " << ent->d_name << " only " << is.gcount() << " could be read";
+            std::cout << "error: /tmp/img/" << ent->d_name << " only " << is.gcount() << " could be read";
           is.close();
           i++;
           /*
