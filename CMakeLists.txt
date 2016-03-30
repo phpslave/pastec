@@ -30,7 +30,8 @@ set(HEADERS      include/thread.h
                  include/searcher.h
                  include/httpserver.h
                  include/requesthandler.h
-                 include/fstream.h)
+                 include/fstream.h
+                 include/dirent.h)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")

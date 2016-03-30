@@ -21,6 +21,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <dirent>
+
 #include <signal.h>
 
 #include <httpserver.h>
