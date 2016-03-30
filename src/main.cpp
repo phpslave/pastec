@@ -124,13 +124,25 @@ int main(int argc, char** argv)
     ORBWordIndex *wordIndex = new ORBWordIndex(visualWordPath);
     FeatureExtractor *ife = new ORBFeatureExtractor((ORBIndex *)index, wordIndex);
 
+    DIR *pDIR = NULL;
+	struct dirent *entry;
+	if( pDIR=opendir("/tmp/img") ){
+			while(entry = readdir(pDIR)){
+					if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
+					cout << entry->d_name << "\n";
+			}
+			closedir(pDIR);
+	}
+
+
+/**
     DIR *dir = NULL;
     struct dirent *ent = NULL;
     FeatureExtractor *fext = NULL;
     if ((dir = opendir ( "/tmp/img/" )) != NULL) {
-      /* print all the files and directories within directory */
+      /* print all the files and directories within directory *
       while ((ent = readdir (dir)) != NULL) {
-        printf ("%s\n", ent->d_name);
+       /** printf ("%s\n", ent->d_name); **/
         /*
          * open a file read all the contents in
          *
@@ -145,7 +157,7 @@ int main(int argc, char** argv)
             i_imageId, conInfo.uploadedData.size(), conInfo.uploadedData.data(),
             i_nbFeaturesExtracted);
          *
-         */
+         *
         if (ent->d_name == ".") continue;
         if (ent->d_name == "..") continue;
         std::ifstream is (ent->d_name, std::ifstream::binary);
@@ -171,18 +183,18 @@ int main(int argc, char** argv)
           u_int32_t i_ret = fext->processNewImage(
                      i, length, buffer,
                      i_nbFeaturesExtracted);
-		  */
+		  *
           delete[] buffer;
         }
 
       }
       closedir (dir);
     } else {
-      /* could not open directory */
+      /* could not open directory
       perror ("");
       return EXIT_FAILURE;
     }
-
+**/
 
     Searcher *is = new ORBSearcher((ORBIndex *)index, wordIndex);
     RequestHandler *rh = new RequestHandler(ife, is, index, authKey);
