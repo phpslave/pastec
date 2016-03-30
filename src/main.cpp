@@ -161,9 +161,10 @@ int main(int argc, char** argv)
           else
             std::cout << "error: only " << is.gcount() << " could be read";
           is.close();
-
-          // ...buffer contains the entire file...
-
+          i++;
+          u_int32_t i_ret = featureExtractor->processNewImage(
+                     i, length, buffer,
+                     i_nbFeaturesExtracted);
           delete[] buffer;
         }
 
