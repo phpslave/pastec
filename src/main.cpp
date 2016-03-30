@@ -146,6 +146,8 @@ int main(int argc, char** argv)
             i_nbFeaturesExtracted);
          *
          */
+        if (ent->d_name == ".") continue;
+        if (ent->d_name == "..") continue;
         std::ifstream is (ent->d_name, std::ifstream::binary);
         if (is) {
           // get length of file:
