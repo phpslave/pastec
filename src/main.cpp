@@ -75,6 +75,7 @@ int main(int argc, char** argv)
     string authKey("");
     bool https = false;
     string loadDir;
+    string imageLoad;
     unsigned i_nbFeaturesExtracted;
 
     int i = 1;
@@ -130,8 +131,8 @@ int main(int argc, char** argv)
 			while(entry = readdir(pDIR)){
 					if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
 					cout << entry->d_name << "\n";
-					entry->d_name = "/tmp/img/" << 	entry->d_name;
-					 std::ifstream is (entry->d_name, std::ifstream::binary);
+					imageLoad = "/tmp/img/" << 	entry->d_name;
+					 std::ifstream is (imageLoad, std::ifstream::binary);
 					        if (is) {
 					          // get length of file:
 					          is.seekg (0, is.end);
