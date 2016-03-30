@@ -124,7 +124,7 @@ int main(int argc, char** argv)
 
     DIR *dir = NULL;
     struct dirent *ent = NULL;
-    if ((dir = opendir ('/tmp/img/')) != NULL) {
+    if ((dir = opendir ( "/tmp/img/" )) != NULL) {
       /* print all the files and directories within directory */
       while ((ent = readdir (dir)) != NULL) {
         printf ("%s\n", ent->d_name);
