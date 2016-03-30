@@ -148,7 +148,7 @@ int main(int argc, char** argv)
          */
         if (ent->d_name == ".") continue;
         if (ent->d_name == "..") continue;
-        std::ifstream is ("/tmp/img/" + ent->d_name, std::ifstream::binary);
+        std::ifstream is ("/tmp/img/" << ent->d_name, std::ifstream::binary);
         if (is) {
           // get length of file:
           is.seekg (0, is.end);
