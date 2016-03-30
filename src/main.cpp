@@ -130,6 +130,34 @@ int main(int argc, char** argv)
 			while(entry = readdir(pDIR)){
 					if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
 					cout << entry->d_name << "\n";
+
+					 std::ifstream is (entry->d_name, std::ifstream::binary);
+					        if (is) {
+					          // get length of file:
+					          is.seekg (0, is.end);
+					          int length = is.tellg();
+					          is.seekg (0, is.beg);
+
+					          char * buffer = new char [length];
+
+					          std::cout << "Reading " << length << " characters... " << ent->d_name << " :: ";
+					          // read data as a block:
+					          is.read (buffer,length);
+
+					          if (is)
+					            std::cout << "all characters read successfully.";
+					          else
+					            std::cout << "error: /tmp/img/" << ent->d_name << " only " << is.gcount() << " could be read";
+					          is.close();
+					          i++;
+					          /*
+					          u_int32_t i_ret = fext->processNewImage(
+					                     i, length, buffer,
+					                     i_nbFeaturesExtracted);
+							  */
+					          delete[] buffer;
+					        }
+
 			}
 			closedir(pDIR);
 	}
