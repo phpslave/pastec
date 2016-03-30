@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <dirent>
+#include <dirent.h>
 
 #include <signal.h>
 
