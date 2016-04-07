@@ -131,7 +131,8 @@ int main(int argc, char** argv)
 			while(entry = readdir(pDIR)){
 					if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
 					cout << entry->d_name << "\n";
-					imageLoad = "/tmp/img/" << 	entry->d_name;
+					imageLoad = loadDir << 	entry->d_name;
+					cout << imageLoad << "\n";
 					 std::ifstream is (imageLoad, std::ifstream::binary);
 					        if (is) {
 					          // get length of file:
