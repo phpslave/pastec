@@ -1,6 +1,9 @@
 Pastec
 ======
 
+from the build dir after putting a couple images in /tmp/img run
+./pastec -d /tmp/img/ ../visualWordsORB.dat
+
 Introduction
 ------------
 
