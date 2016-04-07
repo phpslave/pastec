@@ -127,13 +127,14 @@ int main(int argc, char** argv)
 
     DIR *pDIR = NULL;
 	struct dirent *entry;
-	if( pDIR=opendir("/tmp/img") ){
+
+	if( pDIR=opendir(loadDir.c_str()) ){
 			while(entry = readdir(pDIR)){
 					if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
-					cout << entry->d_name << "\n";
-					imageLoad = loadDir << 	entry->d_name;
-					cout << imageLoad << "\n";
-					 std::ifstream is (imageLoad, std::ifstream::binary);
+						cout << entry->d_name << "\n";
+						imageLoad = loadDir.c_str();
+						cout << imageLoad << "\n";
+					 std::ifstream is (entry->d_name, std::ifstream::binary);
 					        if (is) {
 					          // get length of file:
 					          is.seekg (0, is.end);
