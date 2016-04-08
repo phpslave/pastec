@@ -32,7 +32,8 @@
 #include <orb/orbsearcher.h>
 #include <orb/orbwordindex.h>
 #include <featureextractor.h>
-
+#include <cstdio>
+#include <ctime>
 
 using namespace std;
 
@@ -77,6 +78,8 @@ int main(int argc, char** argv)
     string loadDir;
     string imageLoad;
     unsigned i_nbFeaturesExtracted;
+    std::clock_t start;
+    double duration;
 
     int i = 1;
     while (i < argc)
@@ -130,6 +133,8 @@ int main(int argc, char** argv)
     int image_id = 0;
 
     if ((pDIR = opendir(loadDir.c_str()))) {
+
+        start = std::clock();
         while ((entry = readdir(pDIR))) {
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 )
                 continue;
@@ -157,7 +162,9 @@ int main(int argc, char** argv)
         }
         closedir(pDIR);
     }
+    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
+    std::cout<<"printf: "<< duration <<'\n';
     delete ife;
     delete wordIndex;
     delete index;
