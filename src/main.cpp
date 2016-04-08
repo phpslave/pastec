@@ -100,7 +100,7 @@ int main(int argc, char** argv)
         {
             EXIT_IF_LAST_ARGUMENT()
             loadDir = argv[++i];
-        }        
+        }
         else if (string(argv[i]) == "--https")
         {
             https = true;
@@ -121,114 +121,50 @@ int main(int argc, char** argv)
         ++i;
     }
 
-    Index *index = new ORBIndex(indexPath, buildForwardIndex);
+    ORBIndex *index = new ORBIndex(indexPath, buildForwardIndex);
     ORBWordIndex *wordIndex = new ORBWordIndex(visualWordPath);
-    FeatureExtractor *ife = new ORBFeatureExtractor((ORBIndex *)index, wordIndex);
+    ORBFeatureExtractor *ife = new ORBFeatureExtractor(index, wordIndex);
 
     DIR *pDIR = NULL;
-	struct dirent *entry;
+    struct dirent *entry;
+    int image_id = 0;
 
-	if( pDIR=opendir(loadDir.c_str()) ){
-			while(entry = readdir(pDIR)){
-					if( strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0 )
-						cout << entry->d_name << "\n";
-						imageLoad = loadDir.c_str();
-						cout << imageLoad << "\n";
-					 std::ifstream is (entry->d_name, std::ifstream::binary);
-					        if (is) {
-					          // get length of file:
-					          is.seekg (0, is.end);
-					          int length = is.tellg();
-					          is.seekg (0, is.beg);
+    if ((pDIR = opendir(loadDir.c_str()))) {
+        while ((entry = readdir(pDIR))) {
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 )
+                continue;
+            imageLoad = loadDir.c_str();
+            string fn = loadDir + "/" + entry->d_name;
+            cout << fn << endl;
+            std::ifstream is(fn, std::ios::binary | std::ios::ate);
+            if (is.is_open()) {
+                int length = is.tellg();
+                is.seekg (0, std::ios::beg);
 
-					          char * buffer = new char [length];
+                // char *buffer = new char[length];
+                std::cout << "Reading " << length << " characters... " << entry->d_name << " :: ";
+                // read data as a block:
+                std::vector<char> buffer(length);
+                if (is.read(buffer.data(), length))
+                    std::cout << "all characters read successfully.";
+                else
+                    std::cout << "error: /tmp/img/" << entry->d_name << " only " << is.gcount() << " could be read";
 
-					          std::cout << "Reading " << length << " characters... " << entry->d_name << " :: ";
-					          // read data as a block:
-					          is.read (buffer,length);
-
-					          if (is)
-					            std::cout << "all characters read successfully.";
-					          else
-					            std::cout << "error: /tmp/img/" << entry->d_name << " only " << is.gcount() << " could be read";
-					          is.close();
-					          i++;
-					          /*
-					          u_int32_t i_ret = fext->processNewImage(
-					                     i, length, buffer,
-					                     i_nbFeaturesExtracted);
-							  */
-					          delete[] buffer;
-					        }
-
-			}
-			closedir(pDIR);
-	}
-
-
-/**
-    DIR *dir = NULL;
-    struct dirent *ent = NULL;
-    FeatureExtractor *fext = NULL;
-    if ((dir = opendir ( "/tmp/img/" )) != NULL) {
-      /* print all the files and directories within directory *
-      while ((ent = readdir (dir)) != NULL) {
-       /** printf ("%s\n", ent->d_name); **/
-        /*
-         * open a file read all the contents in
-         *
-         * stat get the file size
-         * allocate byte buffer
-         * read it into the buffer
-         * clear the buffer
-         *
-         * conInfo.uploadedData.data --- read, close
-         *
-         *   u_int32_t i_ret = featureExtractor->processNewImage(
-            i_imageId, conInfo.uploadedData.size(), conInfo.uploadedData.data(),
-            i_nbFeaturesExtracted);
-         *
-         *
-        if (ent->d_name == ".") continue;
-        if (ent->d_name == "..") continue;
-        std::ifstream is (ent->d_name, std::ifstream::binary);
-        if (is) {
-          // get length of file:
-          is.seekg (0, is.end);
-          int length = is.tellg();
-          is.seekg (0, is.beg);
-
-          char * buffer = new char [length];
-
-          std::cout << "Reading " << length << " characters... " << ent->d_name << " :: ";
-          // read data as a block:
-          is.read (buffer,length);
-
-          if (is)
-            std::cout << "all characters read successfully.";
-          else
-            std::cout << "error: /tmp/img/" << ent->d_name << " only " << is.gcount() << " could be read";
-          is.close();
-          i++;
-          /*
-          u_int32_t i_ret = fext->processNewImage(
-                     i, length, buffer,
-                     i_nbFeaturesExtracted);
-		  *
-          delete[] buffer;
+                u_int32_t i_ret = ife->processNewImage(
+                        ++image_id, length, buffer.data(), i_nbFeaturesExtracted);
+                std::cout << "AEW DEBUG done with processNewImage" << std::endl;
+            }
         }
-
-      }
-      closedir (dir);
-    } else {
-      /* could not open directory
-      perror ("");
-      return EXIT_FAILURE;
+        closedir(pDIR);
     }
-**/
 
-    Searcher *is = new ORBSearcher((ORBIndex *)index, wordIndex);
-    RequestHandler *rh = new RequestHandler(ife, is, index, authKey);
+    delete ife;
+    delete wordIndex;
+    delete index;
+
+#if 0
+    Searcher *is = new ORBSearcher(&index, wordIndex);
+    RequestHandler *rh = new RequestHandler(ife, is, (Index *)&index, authKey);
 
     s = new HTTPServer(rh, i_port, https);
 
@@ -236,13 +172,11 @@ int main(int argc, char** argv)
     signal(SIGINT, intHandler);
 
     s->run();
+#endif
 
     cout << "Terminating Pastec." << endl;
 
-    delete s;
-    delete (ORBSearcher *)is;
-    delete (ORBFeatureExtractor *)ife;
-    delete (ORBIndex *)index;
-
     return 0;
 }
+
+// vim: set ts=4 sw=4 expandtab :
